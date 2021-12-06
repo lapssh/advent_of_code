@@ -28,10 +28,10 @@ def create_map(points):
 
 
 def draw_map(points):
-    # print(f'Получены точки: {points}')
+    print(f'Получены точки: {points}')
     for point in points:
         water_map[point[1]][point[0]] += 1
-    # print_map(water_map)
+    print_map(water_map)
 
 
 
@@ -59,6 +59,18 @@ def calculate_points_vertical(line):
     # print(f' {points=}')
     draw_map(points)
 
+def calculate_points_diagonal(line):
+    points = []
+    # для диагональных линий
+    print('Высчитаем точки для диагонального отрезка ',line )
+    if line[0][1] > line [1][1]:
+        line[0][1], line [1][1] = line [1][1], line [0][1]
+    for i in range(line[0][1],line[1][1]+1):
+        # print('Новая точка ',i,  line[0][1])
+        points.append((line[1][1] - i, i))
+    # print(f' {points=}')
+    draw_map(points)
+
 
 def calc_hydrotermal(points):
     for line in points:
@@ -69,7 +81,8 @@ def calc_hydrotermal(points):
             calculate_points_vertical(line)
             # print(f'Vertical {line=} {line[0][0]=} {line[1][0]=}')
         else:
-            pass
+            # pass
+            calculate_points_diagonal(line)
             # print(f'N/A {line=}')
 
 
@@ -77,18 +90,17 @@ def calc_hydrotermal(points):
 def print_map(water_map):
     for line in water_map:
         for coord in line:
-            print(coord, end='  ')
+            pass
+            # print(coord, end='  ')
         print()
 
 
 # filename = 'test-input.txt'
 filename = 'input.txt'
 data = load_data(filename)
-print(data)
 water_map = create_map(data)
 print_map(water_map)
 result = calc_hydrotermal(data)
-print(water_map)
 my_count = 0
 for line in water_map:
     for val in line:
