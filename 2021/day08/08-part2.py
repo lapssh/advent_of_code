@@ -18,8 +18,8 @@ def get_output_data(data):
 
 
 def get_mask_numbers(line):
-    # code = set(line[0])
-    # print(code)
+    code = line[0]
+    print(code)
     tmp = code.split()
     # print(tmp)
     res = []
@@ -115,6 +115,13 @@ def get_mask_numbers(line):
         print('ERROR - TOP not found')
     return numbers
 
+def get_set_value(line):
+    tmp = line.split()
+    print(tmp)
+    res = []
+    for i in tmp:
+        res.append(set(i))
+    return res
 
 def find_eight(code):
     for j in code:
@@ -134,27 +141,37 @@ def decode_data(line):
 
 test_one = ['acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf',
             'acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf']
-x = get_output_data(test_one)
-line = x[0]
-print(line)
-code = line[0]
-res = get_mask_numbers(code)
+# x = get_output_data(test_one)
+# line = x[0]
+# print(line)
+# code = line[0]
+# res = get_mask_numbers(code)
 # print(f'{res=}')
 lines = load_data()
-print(lines)
+# print(lines)
 data = get_output_data(lines)
-print(data)
-codes_as_set = []
-for i in data:
-    print(i[0])
-    tmp = i[0].split()
-    print(tmp)
-    for j in tmp:
-        my_key = set(j)
-        print(my_key)
-        for key, value in data:
-            if value == j:
-                print(f'{value=} {key}')
+print(f'{data=}')
+for line in data:
+    print(line)
+    mask = get_mask_numbers(line[0])
+    # values = get_mask_numbers(line[1])
+    # print((line[1]))
+    # print(line[1])
+    # get_mask_numbers(line[0])
+# print(data)
+# for line in data:
+#     get_mask_numbers(lines)
+# codes_as_set = []
+# for i in data:
+#     print(i[0])
+#     tmp = i[0].split()
+#     print(tmp)
+#     for j in tmp:
+#         my_key = set(j)
+#         print(my_key)
+#         for key, value in data:
+#             if value == j:
+#                 print(f'{value=} {key}')
 
 # decoded_line = decode_data(x[0])
 # print(decoded_line)
