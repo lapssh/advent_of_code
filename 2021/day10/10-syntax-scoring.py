@@ -61,6 +61,7 @@ def replace_incomplite_lines(lines):
         new_lines.append(line)
     return new_lines
 
+
 def part_two(lines):
     score = 0
     score_lines = []
@@ -82,7 +83,7 @@ def part_two(lines):
 
 def my_sort(lines):
     lines = sorted(lines)
-    index_mediana = (len(lines)//2)
+    index_mediana = (len(lines) // 2)
     print(lines[index_mediana])
 
 
