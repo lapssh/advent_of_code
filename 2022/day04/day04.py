@@ -7,19 +7,19 @@ def load_data(filename):
 
 def part1(data):
     score = 0
+    # data = ['1-2,1-3']
     for elf in data:
         elf1, elf2 = elf.split(',')
         elf1_1, elf1_2 = elf1.split('-')
         elf2_1, elf2_2 = elf2.split('-')
-        if int(elf1_1) <= int(elf2_1):
-            if int(elf1_2) >= int(elf2_2):
+        print(f'{elf1_1=} {elf1_2=}  {elf2_1=} {elf2_2=}  {score=}')
+        if (int(elf1_1) <= int(elf2_1)) and (int(elf1_2) >= int(elf2_2)):
+            score += 1
+            print(f'{elf1=} {elf2=} {score=}')
+        else:
+            if (int(elf2_1) <= int(elf1_1)) and (int(elf2_2) >= int(elf1_2)):
                 score += 1
                 print(f'{elf1=} {elf2=} {score=}')
-        else:
-            if int(elf2_1) <= int(elf1_1):
-                if int(elf2_2) >= int(elf1_2):
-                    score += 1
-                    print(f'{elf1=} {elf2=} {score=}')
     return score
 
 
