@@ -59,6 +59,17 @@ def move_crate(cargo_stack, number_of_crates, _from, _to):
     print('после сортировки: ', cargo_stack)
     return cargo_stack
 
+
+def move_crate2(cargo_stack, number_of_crates, _from, _to):
+    print(f'Запрос на перенос {number_of_crates} ящиков из {_from} в {_to}')
+    # print(f'{cargo_stack[_from]=}')
+    stack = cargo_stack[_from][-number_of_crates:]
+    cargo_stack[_from] = cargo_stack[_from][:-number_of_crates]
+    print(f'{stack=}')
+    cargo_stack[_to] = cargo_stack[_to] + stack
+    print('после сортировки: ', cargo_stack)
+    return cargo_stack
+
 def cargo_sort(cargo_stack, commmands):
     for command in commmands:
         # print(command)
@@ -71,7 +82,8 @@ def cargo_sort(cargo_stack, commmands):
         number_crates = int(command[0])
         crate_from = int(command[1])
         crate_to = int(command[2])
-        cargo_stack = move_crate(cargo_stack, number_crates, crate_from, crate_to)
+        cargo_stack = move_crate2(cargo_stack, number_crates, crate_from, crate_to)
+        # cargo_stack = move_crate(cargo_stack, number_crates, crate_from, crate_to)
     return cargo_stack
 
 
@@ -93,4 +105,4 @@ cargo_stack = create_cargo_stack(cargo)
 print(cargo_stack)
 new_cargo_stack = cargo_sort(cargo_stack, commands)
 print(new_cargo_stack)
-print('part1 result:', part1(new_cargo_stack))
+print('part2 result:', part1(new_cargo_stack))
