@@ -51,44 +51,56 @@ def adv_load(data):
 def game_is_valid(game):
     # дастём игру по ID
     game = games[game]['results']
-    red = 0
-    green = 0
-    blue = 0
-    # print(game)
     for res in game:
         red = 0
         green = 0
         blue = 0
-        # print(res)
         red += res[0]
         green += res[1]
         blue += res[2]
         if red > RED or green > GREEN or blue > BLUE:
             return False
-    # print(f'{red=}  {green=}  {blue=}')
-    # if red > RED or green > GREEN or blue > BLUE:
-    #     # print('FALSE')
-    #     return False
-    # elif green > GREEN:
-    #     # print('FALSE')
-    #     return False
-    # elif blue > BLUE:
-    #     # print('FALSE')
-    #     return False
     return True
+
+def game_is_valid2(game):
+    # дастём игру по ID
+    game = games[game]['results']
+    max_red = 0
+    max_green = 0
+    max_blue = 0
+    for res in game:
+        # print(res)
+        if res[0] > max_red:
+            max_red = res[0]
+        if res[1] > max_green:
+            max_green = res[1]
+        if res[2] > max_blue:
+            max_blue = res[2]
+        # print(f'{max_red=} {max_green=} {max_blue=}')
+    multi = max_red * max_green * max_blue
+    return multi
+
+
 def part1(games):
     # необходимо посчиать сумму ID возможных игры.
     acc = 0
-    print(f'Всего было сыграно {len(games)} игр')
+    # print(f'Всего было сыграно {len(games)} игр')
     for game in games:
         # print(game)
         if game_is_valid(game):
-            print(game, ' - ', games[game]['results'])
+            # print(game, ' - ', games[game]['results'])
             acc += game
     # print(f'{acc=}')
+    return acc
+
+def part2(games):
+    acc = 0
+    for game in games:
+        acc += game_is_valid2(game)
     return acc
 
 data = load()
 # data = load(file='test.txt')
 games = adv_load(data)
-print('Part1:', part1(games))  # 101 - не парвильно
+print('Part1 result:', part1(games))  # 2551
+print('Part2 result:', part2(games))  # 62811
