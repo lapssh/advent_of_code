@@ -36,4 +36,21 @@ def part1(time, distance):
         pass
     # print(count_wins)
     return count_wins
-print(f'Part result: {part1(time, distance)}')
+
+def part2(time, distance):
+    # высчитываем оптимальное время для каждой гонки
+    race = 0
+    race01 = (7, 9)
+    count_wins = 1
+    # print(min_time_for_race(race01))
+    for race in range(len(distance)):
+        count_wins *= min_time_for_race((time[race], distance[race]))
+        pass
+    # print(count_wins)
+    return count_wins
+
+
+print(f'Part1 result: {part1(time, distance)}')
+time = [int(''.join(str(el) for el in time))]
+distance = [int(''.join(str(el) for el in distance))]
+print(f'Part2 result: {part2(time, distance)}')
