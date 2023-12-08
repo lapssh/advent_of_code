@@ -51,6 +51,10 @@ def get_card_type(card):
         else:
             # print('Full House', _)
             return 'FullHouse'
+    # проверяем пару
+    elif len(set(card)) == 4:
+        # print('Pare')
+        return 'Pare'
     # проверяем тройку
     elif len(set(card)) <= 4:
         _ = list(card)
@@ -60,23 +64,22 @@ def get_card_type(card):
             # print('Tree', _)
             return 'Three'
         elif len(set(card)) == 3:
+            # print('TwoPare', card)
             return 'TwoPare'
         else:
-            # print('Pare', card)
-            return 'Pare'
-    else:
-        # print('Pare', card)
-        return 'Pare'
-    # проверяем пару
+            # print('TwoPare', card)
+            return 'TwoPare'
+
+
 
 def get_stronger(card, _card):
-    print(f'Равные карты {card=} {_card=}')
+    # print(f'Равные карты {card=} {_card=}')
     for symbol in range(len(card)):
         if type_cards[card[symbol]] > type_cards[_card[symbol]]:
-            print(f' {card=} > {_card=} {card[symbol]} > {_card[symbol]}')
+            # print(f' {card=} > {_card=} {card[symbol]} > {_card[symbol]}')
             return '>'
         elif type_cards[card[symbol]] < type_cards[_card[symbol]]:
-            print(f' {card=} > {_card=} {card[symbol]} < {_card[symbol]}')
+            # print(f' {card=} < {_card=} {card[symbol]} < {_card[symbol]}')
             return '<'
 
 
@@ -84,7 +87,7 @@ def card_is_higher(card, _card):
     # print(f'Сравниваем {card=} и {_card=}')
     type_card1 = get_card_type(card)
     if type_card1 == None:
-        print(card, type_card1, 'Ошибка')
+        print(card, type_card1, _card, 'Ошибка')
         exit()
     # print(type_card1, card)
     type_card2 = get_card_type(_card)
@@ -112,26 +115,26 @@ def insert_card(card):
         idx = 0
         while True:
             if idx == len(ranked_cards):
-                print(f'КОНЕЦ Шаг {idx} {card=} ')
+                # print(f'КОНЕЦ Шаг {idx} {card=} ')
                 ranked_cards.append(card.split())
                 break
             card2 = ranked_cards[idx]
             ans = card_is_higher(card.split()[0], card2[0])
             if ans == '<':
                 # ranked_cards.insert(idx, card.split())
-                print(f'Шаг {idx} {card=} {ans=} {card2=}')
+                # print(f'Шаг {idx} {card=} {ans=} {card2=}')
                 ranked_cards.insert(idx, card.split())
                 break
             elif ans == '>':
-                print(f'Шаг {idx} {card=} {ans=} {card2=}')
+                # print(f'Шаг {idx} {card=} {ans=} {card2=}')
                 idx += 1
 
 def calc_bid():
-    total  = 0
+    total = 0
     for mult, card in enumerate(ranked_cards):
         bid = int(card[1])
         total += (mult + 1) * bid
-        print(f'{bid=}  {mult+1} {total=}')
+        # print(f'{bid=}  {mult+1} {total=}')
     return total
 
 
@@ -144,6 +147,7 @@ def part1(data):
 
 data = load()
 # data = load('test.txt')
+# data = load('test2.txt')
 print(data)
 
-print('Part1 result:', part1(data))
+print('Part1 result:', part1(data)) # 250597026 - error (too high)
