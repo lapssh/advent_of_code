@@ -20,7 +20,7 @@ def build_matrix(data):
 
 def check_borders(data, x1, x2, y, digit):
     # обозначем границы проверки
-    print(f'Число: {digit=} {x1=} {x2=} ')
+    print(f'Число: {digit=} {x1=} {x2=} {y=}')
     left = {'.'}
     right = {'.'}
     if x1 > 0:
@@ -35,7 +35,7 @@ def check_borders(data, x1, x2, y, digit):
         up = data[y - 1][l:r + 1]
         print(f'{up=}')
     else:
-        print('сверху - пусто')
+        # print('сверху - пусто')
         up = {'.'}
 
     # проверка снизу
@@ -53,18 +53,21 @@ def check_borders(data, x1, x2, y, digit):
         if data[y][x1 - 1] == '.':
             left = {'.'}
     elif x1 == 0:
-        print('слева - пусто')
+        # print('слева - пусто')
         left = {'.'}
     # проверка справа
-    print(f'{x1=} {x2=}  {r=} ')
-    if x2 == len(data[y]):
+    # print(f'{x1=} {x2=}  {r=} ')
+    if x2 == len(data[y])-1:
+        # print(f'{x2=} всё равно {len(data[y])=}')
         right = {'.'}
     else:
-        right = data[y][x2 + 1:]
+        # print(f'{x2=} всё равно {len(data[y])=}')
+        # print(f'{x2+1=}')
+        right = data[y][x2 + 1]
         print(f'{right=}')
-    right = right[0]
+    # print(f'{type(right)=} {right=} ')
+    # right = right[0]
     print(f'{right=}')
-    right = right[0]
     res = set(left) | set(right) | set(up) | set(down)
     print(f'{res=}')
     if res != {'.'}:
@@ -74,68 +77,44 @@ def check_borders(data, x1, x2, y, digit):
     return False
 
 def find(data):
+    print(data)
     nums = []
     for y, line in enumerate(data):
         digit = ''
         for x, _ in enumerate(line):
             if _.isdigit():
-                print(_, 'найдено число')
                 if digit == '':
-                    x1 = x
+                    x1, y1 = x, y
                 digit += _
                 x2 = x
-                y = y
             else:
-                if not _.isdigit():
-                    print(f'Надёно число: {digit=} с координатами {x1=} {x2=} {y=}')
-                    nums.append(digit)
+                if not _.isdigit() and digit != '':
+                    # print(f'Надёно число: {digit=} с координатами {x1=} {x2=} {y1=}')
+                    nums.append((digit, (x1, x2, y1)))
                     digit = ''
-    print(nums)
-
-def find_numbers_and_coords(data):
-    print(data)
-    nums = []
-    for y, line in enumerate(data):
-        digit = None
-        for x, symbol in enumerate(line):
-            # print(f'{symbol=} ')
-            if symbol.isdigit():
-                if digit == None:
-                    digit = symbol
-                    x1, y1 = x, y
-                    x2 = x1
-                else:
-                    digit += symbol
-                    x2 = x
-            else:
-                if digit != None:
-                    print(f'Мы нашли число: {digit=}')
-                    print(f'Значит координаты числа {digit=} {x1=} {x2=} {y=} ')
-                    nums.append([digit, (x1, x2, y)])
-                    digit = None
-                    x1, x2 = 0, 0
+        if digit != '':
+            # print(f'Надёно число: {digit=} с координатами {x1=} {x2=} {y1=}')
+            nums.append((digit, (x1, x2, y1)))
+            digit = ''
+        digit = ''
     return nums
 
 
 def part1(data):
     nums = find(data)
-    # nums = find_numbers_and_coords(data)
-    exit()
     true_numbers = []
-    test = nums[0]
 
     for num in nums:
-        # print(f'{test=} число: {test[0]=} x1={test[1][0]} x2={test[1][1]} y={test[1][2]}')
         if check_borders(data, num[1][0], num[1][1], num[1][2], num[0]):
             true_numbers.append(num[0])
-    print(nums)
+    print(true_numbers)
     return sum([int(x) for x in true_numbers])
 
 
-# data = load()
+data = load()
 # data = load('test.txt')  # 4361
-data = load('test2.txt')
+# data = load('test2.txt')
 # data = build_matrix(data)
 result = part1(data)
-print(part1(data))  # не верно  503142(two low)
+print(part1(data))  # не верно  (two low) 504721  win -  540212
 # assert result == 4361
