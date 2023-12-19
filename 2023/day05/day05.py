@@ -68,14 +68,16 @@ def map_generator(src, seeds):
         def seed_in_list(seed, lists):
             # print('!', lists)
             for _ in lists:
+                print(f'{seed=} {lists=}')
                 if seed in _[0]:
                     print(f'{seed} in {_[0]} второй {_[1]=}')
                     idx_seed = _[0].index(seed)
                     print(f'Индекс {idx_seed=} ')
-                    print(f'{_[1]}')
+                    print(f'{_[1]=}')
                     print(f'по этому индексу {_[1][idx_seed]=} ')
                     return _[1][idx_seed]
             else:
+                # return seed
                 return seed
     for seed in seeds:
         # проверка на вхождение
@@ -96,9 +98,9 @@ def map_generator(src, seeds):
 
 data = load('test.txt')
 # data = load()
-data= parse_data(data)
+data = parse_data(data)
 seeds_to_soil_map = map_generator(data['seed_to_soil'], seeds=data['seeds'])
-print(f'{data['seeds']=}')
+print(f'{data["seeds"]=}')
 print(f'{seeds_to_soil_map=}')
 fertilizer_to_water_map = map_generator(data['fertilizer_to_water'], seeds=seeds_to_soil_map)
 print(fertilizer_to_water_map)
