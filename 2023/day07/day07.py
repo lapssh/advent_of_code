@@ -1,3 +1,6 @@
+from collections import Counter
+
+
 def load(file='input.txt'):
     with open(file, "rt") as f:
         return list(line.strip() for line in f.readlines())
@@ -70,7 +73,22 @@ def get_card_type(card):
             # print('TwoPare', card)
             return 'TwoPare'
 
-
+def get_score(card):
+    match [count for _, count in Counter(card).most_common()]:
+        case 5, *_:     # Five of a kind
+            return 'Five'
+        case 4, *_:     # Four of a kind
+            return 'Care'
+        case 3, 2, *_:  # Full House
+            return 'FullHouse'
+        case 3, *_:     # Three of a kind
+            return 'Three'
+        case 2, 2, *_:  # Two pairs
+            return 'TwoPare'
+        case 2, *_:     # Two of a kind
+            return 'Pare'
+        case _:         # Unique
+            return 'High'
 
 def get_stronger(card, _card):
     # print(f'Равные карты {card=} {_card=}')
@@ -85,12 +103,14 @@ def get_stronger(card, _card):
 
 def card_is_higher(card, _card):
     # print(f'Сравниваем {card=} и {_card=}')
-    type_card1 = get_card_type(card)
+    # type_card1 = get_card_type(card)
+    type_card1 = get_score(card)
     if type_card1 == None:
         print(card, type_card1, _card, 'Ошибка')
         exit()
     # print(type_card1, card)
-    type_card2 = get_card_type(_card)
+    # type_card2 = get_card_type(_card)
+    type_card2 = get_score(_card)
     # проверяем чья раздача лучше
     if type_ranks[type_card1] == type_ranks[type_card2]:
         # Необходимо определить старшую букву
@@ -150,4 +170,4 @@ data = load()
 # data = load('test2.txt')
 print(data)
 
-print('Part1 result:', part1(data)) # 250597026 - error (too high)
+print('Part1 result:', part1(data)) # 250597026 250474325- error (too high)
